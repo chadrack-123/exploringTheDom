@@ -1,46 +1,54 @@
-console.log(document)
+// Initial Setup
+console.log(document);
 const myMessage = document.querySelector('.myMessage');
 console.log(myMessage);
-// myMessage.innerText = 'This is a message in the DOM!'
-
-setTimeout(function(){
-    myMessage.innerText = 'This is a message in the DOM!'
-}, 3000 )
 
 const theMessageButton = document.querySelector('.theMessageButton');
-theMessageButton.addEventListener('click', function() {
-    myMessage.innerText = 'Button pressed'
-});
-
-const theMessageButtonHidden = document.querySelector('.theMessageButtonHide');
-theMessageButtonHidden.addEventListener('click', function() {
-    setTimeout(function() {
-        myMessage.innerHTML = '';
-    }, 3000);
-});
-
+const theMessageButtonClear = document.querySelector('.theMessageButtonClear');
 const inputBox = document.querySelector('.theInputValue');
-
-theMessageButton.addEventListener('click', function() {
-    if (inputBox.value.trim().length > 0) {
-        myMessage.innerText = inputBox.value;
-     }
-});
-
-myMessage.addEventListener('click', function() {
-    myMessage.classList.toggle('darkmode')
-})
-
+const fruitInputBox = document.querySelector('.fruitInputValue');
+const addFruitButton = document.querySelector('.addFruitButton');
+const fruitList = document.querySelector('.fruits');
 const fruits = ['Apples', 'Pears', 'Oranges', 'Grapes', 'Bananas'];
 
-const fruitList = document.querySelector(".fruits");
+// Delayed Message Update
+setTimeout(() => {
+    myMessage.innerText = 'This is a message in the DOM!';
+}, 3000);
 
-for(let i=0;i<fruits.length;i++){
-   // get fruits from the list
-   const fruit = fruits[i];
-   
-   // create a new li element
-   const li = document.createElement('li');
-   li.innerText = fruit;
-   fruitList.appendChild(li);
-}
+// Button Event Handling
+theMessageButton.addEventListener('click', () => {
+    if (inputBox.value.trim().length > 0) {
+        myMessage.innerText = inputBox.value;
+    } else {
+        myMessage.innerText = 'Button pressed';
+    }
+});
+
+theMessageButtonClear.addEventListener('click', () => {
+    myMessage.innerText = '';
+    inputBox.value = '';
+});
+
+// Toggle Class on Click
+myMessage.addEventListener('click', () => {
+    myMessage.classList.toggle('darkmode');
+});
+
+// Create and Append List Items
+fruits.forEach(fruit => {
+    const li = document.createElement('li');
+    li.innerText = fruit;
+    fruitList.appendChild(li);
+});
+
+// Add Fruit to List
+addFruitButton.addEventListener('click', () => {
+    const newFruit = fruitInputBox.value.trim();
+    if (newFruit.length > 0) {
+        const li = document.createElement('li');
+        li.innerText = newFruit;
+        fruitList.appendChild(li);
+        fruitInputBox.value = '';
+    }
+});
